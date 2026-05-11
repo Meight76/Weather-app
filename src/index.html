@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+</head>
+<body>
+    <header id="logo">
+        <span id="logo-name">Weather App</span>
+        <div id="logo-check">
+            <input type="checkbox" name="measure-input" id="measure-input">
+        </div>
+    </header>
+    <main id="main">
+        <div id="location-div">
+            <input type="search" placeholder="enter city" id="location-input">
+            <button id="my-location-btn"></button>
+        </div>
+        <section id="geral-infos">
+            <div id="geral-infos-head">
+                <h1 id="city-name"></h1>
+                <div id="weather-icon"></div>
+            </div>
+            <div id="geral-infos-body">
+                <div id="temperature-div">
+                    <h2 id="temperature"></h2>
+                    <p id="temp-feels-like"></p>
+                </div>
+                <div id="weather-div">
+                    <h3 id="weather-info"></h3>
+                </div>
+                <div id="air-quality-div">
+                    <p id="air-quality"></p>
+                </div>
+                <div id="pressure-div">
+                    <p id="pressure"></p>
+                </div>
+                <div id="humidity-div">
+                    <p id="humidity"></p>
+                </div>
+            </div>
+        </section>
+        <h2>Next Hours:</h2>
+        <section id="next-hours"></section>
+    </main>
+
+    <footer id="footer">Just an educational project</footer>
+</body>
+</html>
