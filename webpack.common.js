@@ -16,7 +16,7 @@ export default {
         }),
     ],
     devServer: {
-        watchFile: ["./src/template.html"],
+        watchFiles: ["./src/template.html"],
     },
 
     output: {

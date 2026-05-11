@@ -6,18 +6,27 @@
     <title>Weather App</title>
 </head>
 <body>
-    <header id="logo">
+    <header id="logo" class="glass">
         <span id="logo-name">Weather App</span>
         <div id="logo-check">
-            <input type="checkbox" name="measure-input" id="measure-input">
         </div>
     </header>
     <main id="main">
-        <div id="location-div">
-            <input type="search" placeholder="enter city" id="location-input">
-            <button id="my-location-btn"></button>
+        <div id="location-div" class="glass">
+            <p id="loc-errors"></p>
+                <label for="location-input">
+                    <input type="search" placeholder="enter city" class="glass" id="location-input">
+                </label>
+                <button id="my-location-btn" class="glass">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M536.5-503.5Q560-527 560-560t-23.5-56.5Q513-640 480-640t-56.5 23.5Q400-593 400-560t23.5 56.5Q447-480 480-480t56.5-23.5ZM480-186q122-112 181-203.5T720-552q0-109-69.5-178.5T480-800q-101 0-170.5 69.5T240-552q0 71 59 162.5T480-186Zm0 106Q319-217 239.5-334.5T160-552q0-150 96.5-239T480-880q127 0 223.5 89T800-552q0 100-79.5 217.5T480-80Zm0-480Z"/></svg>
+                    <span>Use my location</span>
+                </button>
+            <button id="measure-btn" value="celcius" class="glass measure">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#ffffff"><path d="M338.5-138.5Q280-197 280-280q0-48 21-89.5t59-70.5v-320q0-50 35-85t85-35q50 0 85 35t35 85v320q38 29 59 70.5t21 89.5q0 83-58.5 141.5T480-80q-83 0-141.5-58.5ZM440-520h80v-40h-40v-40h40v-80h-40v-40h40v-40q0-17-11.5-28.5T480-800q-17 0-28.5 11.5T440-760v240Z"/></svg>
+                <span>Celcius</span>
+            </button>
         </div>
-        <section id="geral-infos">
+        <section id="geral-infos" class="glass">
             <div id="geral-infos-head">
                 <h1 id="city-name"></h1>
                 <div id="weather-icon"></div>
@@ -41,10 +50,10 @@
                 </div>
             </div>
         </section>
-        <h2>Next Hours:</h2>
+        <!-- <h2>Next Hours:</h2> -->
         <section id="next-hours"></section>
     </main>
 
-    <footer id="footer">Just an educational project</footer>
+    <footer id="footer" class="glass">Just an educational project</footer>
 </body>
 </html>
