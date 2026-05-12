@@ -8,12 +8,13 @@ import rain from "../imgs/weather-icons-master/svg/wi-rain.svg";
 import snow from "../imgs/weather-icons-master/svg/wi-snow.svg";
 import showers from "../imgs/weather-icons-master/svg/wi-showers.svg";
 import thunderstorm from "../imgs/weather-icons-master/svg/wi-storm-showers.svg";
-import { capitalize } from "../help-functions.js";
+import { capitalize, findNextHourIndex } from "../help-functions.js";
+import updateBackgroundGradient from "./updateBackground.js";
 
  export const weatherCodeInfo = {
     0: {
         icon: sunnyIcon,
-        name: "Sunny"
+        name: "clear"
     },
     1: {
         icon: mainlyClear,
@@ -53,8 +54,10 @@ import { capitalize } from "../help-functions.js";
     }
 };
 
-export default function updateCurrentWeatherUi(weatherObj, cityName) {
+export default function updateWeatherUi(weatherObj, cityName) {
     const current = weatherObj.current;
+    const hourly = weatherObj.hourly;
+    console.log(weatherObj);
     updateIcon(current["weather_code"]);
     updateCityName(cityName);
     updateTemperature(current["temperature_2m"]);
@@ -63,6 +66,8 @@ export default function updateCurrentWeatherUi(weatherObj, cityName) {
     updatehumidity(current["relative_humidity_2m"]);
     updateWeatherInfo(current["weather_code"]);
     updateWindSpeed(current["wind_speed_10m"]);
+    updateBackgroundGradient(current["is_day"]);
+    generateWeatherInHours(hourly);
 };
 
 function updateIcon(weatherCode) {
@@ -116,3 +121,9 @@ function updateWeatherInfo(weatherCode) {
     const weatherCodeProp = String(weatherCode).charAt(0);
     weatherInfoHeader.textContent = weatherCodeInfo[weatherCodeProp].name;
 }
+
+function generateWeatherInHours(hourly) {
+    const firstIndexHour = findNextHourIndex(hourly.time);
+    console.log(firstIndexHour, hourly.time[firstIndexHour]);
+}
+

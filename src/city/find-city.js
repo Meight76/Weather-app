@@ -1,3 +1,5 @@
+import { errorAwaitingWeather } from "../ui/help-ui.js";
+
 export default async function findCityLoc(city) {
     try {
         const response = await fetch("https://geocoding-api.open-meteo.com/v1/search?name=" + city);
@@ -9,5 +11,6 @@ export default async function findCityLoc(city) {
         return [data.results[0].latitude, data.results[0].longitude];
     } catch (e) {
         console.error(e);
+        errorAwaitingWeather();
     }
 }

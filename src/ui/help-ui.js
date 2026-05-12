@@ -22,7 +22,11 @@ export async function errorAwaitingWeather() {
     myLocationBtn.classList.add("error-btn");
     myLocationBtn.setAttribute("disabled", "");
     console.log("handling");
-    myLocationSpan.textContent = "ERROR!";
-    setTimeout(removeAwaitingWeather, 2000);
+    const copy = myLocationBtn.innerHTML;
+    myLocationBtn.textContent = "ERROR";
+    setTimeout(() => {
+        myLocationBtn.innerHTML = copy;
+        removeAwaitingWeather();
+    }, 2500);
 
 }
