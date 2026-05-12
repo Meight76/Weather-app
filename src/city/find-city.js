@@ -5,6 +5,7 @@ export default async function findCityLoc(city) {
         const data = await response.json()
         if (!data.results?.[0]) throw new Error("Couldn't find proper data");
 
+        console.log(data);
         return [data.results[0].latitude, data.results[0].longitude];
     } catch (e) {
         console.error(e);
