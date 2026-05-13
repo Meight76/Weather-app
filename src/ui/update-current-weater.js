@@ -9,7 +9,7 @@ import snow from "../imgs/weather-icons-master/svg/wi-snow.svg";
 import showers from "../imgs/weather-icons-master/svg/wi-showers.svg";
 import thunderstorm from "../imgs/weather-icons-master/svg/wi-storm-showers.svg";
 import { capitalize, findNextHourIndex } from "../help-functions.js";
-import updateBackgroundGradient from "./updateBackground.js";
+import updateBackground from "./updateBackground.js";
 
  export const weatherCodeInfo = {
     0: {
@@ -66,7 +66,7 @@ export default function updateWeatherUi(weatherObj, cityName) {
     updatehumidity(current["relative_humidity_2m"]);
     updateWeatherInfo(current["weather_code"]);
     updateWindSpeed(current["wind_speed_10m"]);
-    updateBackgroundGradient(current["is_day"]);
+    updateBackground(current["is_day"]);
     generateWeatherInHours(hourly);
 };
 
@@ -80,7 +80,7 @@ function updateWindSpeed(windSpeed) {
     const windSpeedPara = document.querySelector("#wind-speed");
     const system = document.querySelector("#measure-btn").value;
 
-    windSpeedPara.textContent = windSpeed + (system === "celsius" ? " km/h" : " mph")
+    windSpeedPara.textContent = "wind speed: " + windSpeed + (system === "celsius" ? " km/h" : " mph")
 }
 
 function updateCityName(name) {
@@ -94,7 +94,7 @@ function updateTemperature(temperature) {
 
     const system = measureBtn.value;
 
-    temperatureHeader.textContent = temperature + (system === "celsius" ? "C" : "F");
+    temperatureHeader.textContent = "temp " + temperature + (system === "celsius" ? " ℃" : " °F");
 }
 
 function updateFeelsLike(temperature) {
@@ -103,17 +103,17 @@ function updateFeelsLike(temperature) {
 
     const system = measureBtn.value;
 
-    feelsLikePara.textContent = temperature + (system === "celsius" ? "C" : "F");
+    feelsLikePara.textContent = "feels like " + temperature + (system === "celsius" ? " ℃" : " °F");
 }
 
 function updatePressure(pressure) {
     const pressurePara = document.querySelector("#pressure");
-    pressurePara.textContent = pressure;
+    pressurePara.textContent = "pressure: " + pressure + " hPa";
 }
 
 function updatehumidity(humidity) {
     const humidityPara = document.querySelector("#humidity");
-    humidityPara.textContent = humidity + "%";
+    humidityPara.textContent = "humidity: " + humidity + "%";
 }
 
 function updateWeatherInfo(weatherCode) {
@@ -123,7 +123,49 @@ function updateWeatherInfo(weatherCode) {
 }
 
 function generateWeatherInHours(hourly) {
-    const firstIndexHour = findNextHourIndex(hourly.time);
-    console.log(firstIndexHour, hourly.time[firstIndexHour]);
+    try {
+        const firstIndexHour = findNextHourIndex(hourly.time);
+        if (firstIndexHour === -1) throw new Error("Failed to get hour");
+        const hoursDiv = document.querySelector("#next-hours");
+        if (hoursDiv === null) throw new Error("failded to get hours div");
+
+        generateHourItem(hourly.time, firstIndexHour, hourly, hoursDiv);
+
+    } catch (error) {
+        console.error(error);
+        return error;
+    }
 }
 
+function generateHourItem(hourArr, firstHourIndex, weatherHourObj, node) {
+    const system = document.querySelector("#measure-btn").value;
+    for (let i = 0; i < 24; i++) {
+        const index = firstHourIndex + i;
+        const iconIndex = String(weatherHourObj.weather_code[index]).charAt(0);
+
+        const item = document.createElement("div");
+        const iconDiv = document.createElement("div");
+        const hour = document.createElement("h2");
+        const temperature = document.createElement("h3");
+        const windSpeed = document.createElement("p");
+
+        item.classList.add("hour-item");
+        item.classList.add("glass");
+        iconDiv.classList.add("hour-icon");
+        hour.classList.add("hour-time");
+        temperature.classList.add("hour-temp");
+        windSpeed.classList.add("hour-wind");
+
+        iconDiv.innerHTML = weatherCodeInfo[iconIndex].icon;
+        hour.textContent = String(new Date(hourArr[index]).getHours()).padStart(2, "0") + ":00";
+        temperature.textContent = weatherHourObj["temperature_2m"][index] + (system === "celsius" ? " ℃" : " °F");
+        windSpeed.textContent = weatherHourObj["wind_speed_10m"][index] + (system === "celsius" ? " km/h" : "mph");
+
+        item.appendChild(hour);
+        item.appendChild(iconDiv);
+        item.appendChild(temperature);
+        item.appendChild(windSpeed);
+
+        node.appendChild(item);
+    }
+}
